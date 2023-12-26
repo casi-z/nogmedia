@@ -4,39 +4,7 @@ import {database} from '../app.js'
 
 const obj = (fs.readFileSync('./watchers.json', 'utf8'));
 
-export async function getNewsByID(request, response) {
 
-
-    database.query(`SELECT * FROM news WHERE id = ${request.body.id}`,
-
-        (error, result) => {
-
-            if (error) {
-                response.status(404).send({'result': `News with id "${request.body.id} is not exist`})
-            } else {
-                response.send(result[0])
-            }
-
-
-        }
-    )
-
-
-}
-
-export async function getNewsImageByID(request, response) {
-
-    const imageURL = `./media/news/${request.body.id}.jpg`
-
-    fs.readFile(imageURL, function (error, data) {
-        if (error) {
-            response.statusCode = 404;
-            console.error(`Resource "${imageURL}" not found!`);
-        } else {
-            response.send(data)
-        }
-    });
-}
 
 export async function posts(req, res) {
     database.query(`SELECT *

@@ -1,8 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.aca310ed.css",
-    "main.js": "/static/js/main.a9efbde7.js",
-    "static/media/background.png": "/static/media/background.4aba797cd52d3a5be09e.png",
+    "main.js": "/static/js/main.02230eba.js",
     "static/media/news-background.png": "/static/media/news-background.05f8f63e1d786ea6a587.png",
     "static/media/cool-guys.jpg": "/static/media/cool-guys.226e4c4f896974539995.jpg",
     "static/media/Pretoria Deco.ttf": "/static/media/Pretoria Deco.fdcb3c0e0d15aef59ef0.ttf",
@@ -13,10 +12,10 @@
     "static/media/InstagramIcon.svg": "/static/media/InstagramIcon.47cc002f3a1ca72880d030c77f433105.svg",
     "static/media/FacebookIcon.svg": "/static/media/FacebookIcon.60df60c410a5ca8639621cf61889b7c2.svg",
     "main.aca310ed.css.map": "/static/css/main.aca310ed.css.map",
-    "main.a9efbde7.js.map": "/static/js/main.a9efbde7.js.map"
+    "main.02230eba.js.map": "/static/js/main.02230eba.js.map"
   },
   "entrypoints": [
     "static/css/main.aca310ed.css",
-    "static/js/main.a9efbde7.js"
+    "static/js/main.02230eba.js"
   ]
 }

@@ -3,6 +3,6 @@ import controller from "../controllers/order";
 
 const router = express.Router()
 router.post('/send-code', controller.sendCode)
-//router.post('/post-code', controller.login)
+//router.post('/post-code', controller.user)
 
 export default router;

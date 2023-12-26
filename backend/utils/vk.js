@@ -1,26 +1,48 @@
 import easyvk from 'easyvk'
 import {setTimer} from "./other.js";
 
-const Bot = (code) => {
-    console.log(1)
-    easyvk({
-        token: 'vk1.a.AtpHuH1He7R3VKw1f5VA6SM1R2Hov4ucL7YdFzYHsycNAj7Sk8GPZpzRnded7t_zOq0gWtDnc_wVacK7UQKbCkd-9JMGp95VxbyOIGWewDJ1juhyPqv3JaIAwNDMCfekICJK-OLpwsvw2vOOcI7s751b_KVwKdZ3Xo4GRjYy7BB3S13AyIWvNbwFqLo_YGK2Wds3IiIia7BzWajyzZUqKw'
-    }).then(async vk => {
+class Bot {
+    constructor(token) {
+        this.token = token
 
-        let peerId = 318059266 // ID получателя
 
-        /** Отправляем сообщение */
-        let response = await vk.call('messages.send', {
-            peer_id: peerId,
-            message: code,
-            /** Получаем случайное число с привязкой к дате*/
-            random_id: easyvk.randomId()
+    }
+
+    sendCode(peerId, code) {
+
+
+
+        easyvk({
+            token: this.token
+        }).then(async vk => {
+
+
+            /** Отправляем сообщение */
+            let response = await vk.call('messages.send', {
+                peer_id: peerId,
+                message: `Код для входа в админку:`,
+                /** Получаем случайное число с привязкой к дате*/
+                random_id: easyvk.randomId()
+            })
+
+
         })
+        easyvk({
+            token: this.token
+        }).then(async vk => {
 
-        console.log(response) // Выводим ID отправленного сообщения
 
-        setTimer(0, 30)
-    })
+            /** Отправляем сообщение */
+            let response = await vk.call('messages.send', {
+                peer_id: peerId,
+                message: code,
+                /** Получаем случайное число с привязкой к дате*/
+                random_id: easyvk.randomId()
+            })
+
+            setTimer(0, 30)
+        })
+    }
 }
 
-export default Bot;
+export default new Bot('vk1.a.IBjZWUVrh7pltiFBHntR6KakUUj1OjDelycmIS30PexN1Rw9uTyHfXrlig5HoNx0KctbwEO8NAdTjmRLPeyFN4ljl8wgnRG0tyKEABghojgRYRocRtJn2xwniu7wfJInFAG5zSD561p7SULGnCTGbyWXqIVixh__G0UTlxYsR5uVhWViDv67eaGCz2F3ApLxJHlsnXS__m7eXxSrK94Xdg');
