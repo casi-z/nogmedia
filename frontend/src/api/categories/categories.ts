@@ -10,6 +10,7 @@ class CategoriesAPI extends Request {
         
         return await super.get('get-categories')
     }
+
 }
 
 export default CategoriesAPI

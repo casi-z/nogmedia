@@ -1,11 +1,12 @@
 import usePopularNewsSectionStyles from './PopularNewsSection.style'
-import { ReactChild, FC } from 'react'
+import { ReactChild, FC, useState, useEffect } from 'react'
 import { Box, Button } from '@mui/material'
 import PrimaryHeader from '../PrimaryHeader/PrimaryHeader'
 import SecondaryHeader from '../SecondaryHeader/SecondaryHeader'
 import Text from '../Text/Text'
 import NewsBackground from '@/img/news-background.png'
 import { INews } from '@/types/types'
+import NewsAPI from '@/api/news/news'
 
 const { log } = console
 
@@ -15,15 +16,24 @@ interface PopularNewsSectionProps {
 
 }
 
+const news = new NewsAPI()
+
 const PopularNewsSection: FC<PopularNewsSectionProps> = ({ children }) => {
 
     const Styles = usePopularNewsSectionStyles()
 
-    const popularNews = [
-        { name: 'Name news here', text: 'FROG is a deflationary token with', href: '#' },
-        { name: 'Name news here', text: 'FROG is a deflationary token with', href: '#' },
-        { name: 'Name news here', text: 'FROG is a deflationary token with', href: '#' },
-    ]
+    const [popularNews, setPopularNews] = useState<INews[]>([])
+
+    async function getPopularNews() {
+        const result = await news.getAllPopular()
+        if(true){
+            setPopularNews(result)
+        }
+    }
+
+    useEffect(() => {
+        getPopularNews()
+    },[])
 
     return (
         <Box component={Styles} className="PopularNews popular-news">
@@ -34,15 +44,15 @@ const PopularNewsSection: FC<PopularNewsSectionProps> = ({ children }) => {
 
             {popularNews.map(news => (
 
-                <Button href={news.href} className='popular-news__news'>
+                <Button href={`/article?id=${news.id}`} className='popular-news__news'>
 
                     <img src={NewsBackground} alt="news" />
 
                     <Box className='popular-news__content'>
                         
-                        <PrimaryHeader>{news.name}</PrimaryHeader>
+                        <PrimaryHeader>{news.title}</PrimaryHeader>
 
-                        <Text>{news.text}</Text>
+                        <Text>{news.text.slice(0, 20)}...</Text>
 
                     </Box>
                 </Button>

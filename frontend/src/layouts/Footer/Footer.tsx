@@ -60,9 +60,17 @@ const Footer: FC<FooterProps> = ({ children, className }) => {
 
             </Box>
 
-            <Box className='footer__bottom'>
+            <Box component={'ul'} className='footer__bottom'>
+                
 
-                Все права защищены <Link className={'footer__link'} href={'https://nogkolledzh.ru/'}>© Медиацентр Ногинского колледжа</Link>
+                <Box component={'li'}>
+                Все права защищены © Медиацентр&nbsp;<Link className={'footer__link'} href={'https://nogkolledzh.ru/'}>Ногинского колледжа</Link>
+                </Box>
+                <Box component={'li'}>
+                    made by&nbsp;
+                    <Link className={'footer__link'} href={'https://casi-z.github.io'}>casi-z</Link>
+
+                </Box>
 
             </Box>
 

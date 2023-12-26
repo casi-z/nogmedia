@@ -1,3 +1,5 @@
+import {SetStateAction} from "react";
+
 export interface IMenuItem {
     name: string,
     href: string,
@@ -16,4 +18,9 @@ export type INews = {
 export interface ITag {
     name: string,
     href: string,
+}
+
+export interface IGlobalContext {
+    breadcrumbs: string[] | undefined,
+    setBreadcrumbs: any,
 }

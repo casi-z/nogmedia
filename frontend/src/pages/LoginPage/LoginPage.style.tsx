@@ -18,7 +18,7 @@ function useLoginPageStyles() {
           display: flex;
           justify-content: center;
           align-items: center;
-          .login-form{
+          .user-form{
             display: flex;
             gap: 1vw;
             flex-direction: column;

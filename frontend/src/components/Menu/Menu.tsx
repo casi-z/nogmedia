@@ -26,7 +26,7 @@ const menuItems = [
     },
     {
         name: 'Ногинский колледж',
-        href: '/'
+        href: 'https://nogkolledzh.ru/'
     },
 
 ]
@@ -36,7 +36,7 @@ const Menu: FC<MenuProps> = ({ children }) => {
 
     const mobileVersion = useMediaQuery((theme: any) => theme.breakpoints.up('sm'))
 
-    const [isMenuBurgerOpen, setIsMenuBurgerOpen] = useState(false)
+
 
     return (
         <>

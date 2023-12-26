@@ -1,10 +1,11 @@
 import useLoginPageStyles from './LoginPage.style'
 import {ReactChild, FC, useState, useRef} from 'react'
-import {Box, Button, Input, TextField} from '@mui/material'
+import {Alert, Box, Button, Collapse, IconButton, TextField} from '@mui/material'
 import Page from "@/components/Page/Page";
-import * as React from "react";
-import Login from "@/api/login/login";
-
+import SendIcon from '@mui/icons-material/Send';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CloseIcon from '@mui/icons-material/Close';
+import User from "@/api/user/user";
 
 const {log} = console
 
@@ -15,24 +16,42 @@ interface LoginPageProps {
 }
 
 
-const login = new Login()
+const user = new User()
 
 const LoginPage: FC<LoginPageProps> = ({children}) => {
 
     const Styles = useLoginPageStyles()
 
-    let username = ''
 
-    const loginInput = useRef<HTMLInputElement>(null)
+    const [userAction, setLoginAction] = useState('sendCode');
+    const [alertMessage, setAlertMessage] = useState<string>('');
+    const [username, setUsername] = useState<string>('')
+    const inputRef = useRef<HTMLInputElement>(null)
 
-    function handleChange(event: any){
-        username = event.target.value
+    function handleChange(event: any) {
+        //setUsername(event.target.value)
 
     }
 
-    async function handleClick(){
-        log(username)
-        await login.sendCode('test')
+    async function handleClick(event: any) {
+        event.preventDefault()
+        const value = inputRef.current?.querySelector('input')?.value
+        setUsername(String(value))
+        if (userAction === 'sendCode') {
+
+            const result = await user.sendCode(String(value))
+
+            if (result.type) {
+                setAlertMessage(result.message)
+            } else {
+                setLoginAction('user')
+            }
+
+        } else {
+            await user.login(username, Number(value))
+            setLoginAction('sendCode')
+        }
+
 
     }
 
@@ -43,24 +62,53 @@ const LoginPage: FC<LoginPageProps> = ({children}) => {
 
                 <Box
                     component={"form"}
-                    className='login-page__login-form login-form'
+                    className='user-page__user-form user-form'
                     noValidate
                     autoComplete="off"
                 >
+                    <Collapse in={alertMessage !== ''}>
+                        <Alert
+                            severity="error"
+                            action={
+                                <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                        setAlertMessage('');
+                                    }}
+                                >
+                                    <CloseIcon fontSize="inherit"/>
+                                </IconButton>
+                            }
+                            sx={{mb: 2}}
+                        >
+                            {alertMessage}
+                        </Alert>
+                    </Collapse>
 
                     <TextField
-                        id="outlined-controlled"
-                        label="Controlled"
-                        ref={loginInput}
-                        onChange={handleChange}
+                        label={
+                            userAction === 'sendCode'
+                                ? "VK ID"
+                                : 'Код из сообщения'
+                        }
+                        ref={inputRef}
                     />
                     <Button
-                        disabled={username === ''}
                         variant={'contained'}
                         onClick={handleClick}
+                        endIcon={
+                            userAction === 'sendCode'
+                                ? <SendIcon/>
+                                : <ArrowForwardIosIcon/>
+                        }
 
-
-                    >Вход</Button>
+                    >{
+                        userAction === 'sendCode'
+                            ? 'Отправить код'
+                            : 'Войти'
+                    }</Button>
 
                 </Box>
 

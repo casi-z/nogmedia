@@ -25,7 +25,7 @@ const PrimaryNews: FC<PrimaryNewsProps> =
 
         return (
             <Button
-                href={`/article#${id}`}
+                href={`/article?id=${id}`}
                 component={Styles}
                 sx={{background: `linear-gradient(0deg, rgba(8, 4, 53, 0.81) 33.01%, rgba(8, 4, 53, 0.00) 79.18%), url(${image}) center/cover`}}
                 className={`PrimaryNews primary-news ${className}`}

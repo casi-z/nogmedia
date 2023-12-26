@@ -4,6 +4,7 @@ class HttpError {
     }
     public type = 'error'
     public error;
+    
 
 }
 export default HttpError

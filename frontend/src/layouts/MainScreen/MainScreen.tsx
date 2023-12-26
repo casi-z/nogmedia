@@ -24,9 +24,9 @@ const MainScreen: FC<MainScreenProps> = ({children}) => {
         <Box className='MainScreen main-screen' component={Styles}>
             
             <Slider>
-                {Array.from({length: 3}).map(() => (
+                {Array.from({length: 3}).map((element, index) => (
 
-                    <SwiperSlide className='main-screen__new-video'>
+                    <SwiperSlide key={index} className='main-screen__new-video'>
                         Новое видео
 
                     </SwiperSlide>

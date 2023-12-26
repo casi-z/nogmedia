@@ -1,11 +1,12 @@
 import useMainStyles from './Main.style'
-import { ReactChild, FC } from 'react'
+import {ReactChild, FC, useEffect} from 'react'
 import { Box } from '@mui/material'
 import MainScreen from '@/layouts/MainScreen/MainScreen'
 import Page from '@/components/Page/Page'
 import PrimaryNewsSection from '@/layouts/PrimaryNewsSection/PrimaryNewsSection'
 import SecondaryNewsSection from '@/layouts/SecondaryNewsSection/SecondaryNewsSection'
 import CategorySection from '@/layouts/CategorySection/CategorySection'
+import viewsHistory from "@/utils/ViewsHistory";
 
 const { log } = console
 
@@ -18,10 +19,11 @@ interface MainProps {
 const Main: FC<MainProps> = ({ children }) => {
     const Styles = useMainStyles()
 
+
     return (
         <Page>
             <Box className='Main main' component={Styles}>
-                <MainScreen />
+                {/* <MainScreen /> */}
                 <PrimaryNewsSection />
 
                 <Box className='main__left-container'>

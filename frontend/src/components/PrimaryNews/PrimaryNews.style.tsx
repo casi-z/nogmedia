@@ -21,12 +21,16 @@ function usePrimaryNewsStyles() {
           text-transform: none;
           padding: 2vh 1vw;
           color: ${theme.palette.text.secondary};
-          
+
           .primary-news__content {
             width: 57%;
+
+            .PrimaryHeader {
+              
+            }
           }
-          
-          .PrimaryHeader{
+
+          .PrimaryHeader {
             font-family: Montserrat;
             white-space: nowrap;
             font-size: 24px;
@@ -52,7 +56,7 @@ function usePrimaryNewsStyles() {
               margin-right: 0.5vw;
             }
           }
-          
+
           p {
             color: #B9B7DC;
           }

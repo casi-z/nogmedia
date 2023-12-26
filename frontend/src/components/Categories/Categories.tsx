@@ -4,6 +4,7 @@ import { Box, Button, Link, List, ListItem, Skeleton } from '@mui/material'
 import PrimaryHeader from '../PrimaryHeader/PrimaryHeader'
 import SecondaryHeader from '../SecondaryHeader/SecondaryHeader'
 import CategoriesAPI from '@/api/categories/categories'
+import URLutil from '@/utils/URLutil'
 
 const { log } = console
 
@@ -17,7 +18,7 @@ const categoriesAPI = new CategoriesAPI()
 
 const Categories: FC<CategoriesProps> = ({ children }) => {
 
-    const [categoriesData, setCategoriesData] = useState<{ name: string }[]>([])
+    const [categoriesData, setCategoriesData] = useState<{ name: string, id: number }[]>([])
 
     const [isLoadingFailed, setIsLoadingFailed] = useState<boolean>(false)
 
@@ -26,19 +27,18 @@ const Categories: FC<CategoriesProps> = ({ children }) => {
 
 
         const response = await categoriesAPI.getCategories()
-        if (response.type = 'error') {
+        if (response.type === 'error') {
             console.error(response.error)
             setIsLoadingFailed(true)
             return
         }
-
+        log(response)
         setCategoriesData(response.data)
 
     }
 
     useEffect(() => {
         getCategoriesData()
-        log(categoriesData)
     }, [])
 
 
@@ -56,26 +56,37 @@ const Categories: FC<CategoriesProps> = ({ children }) => {
             >
 
                 {categoriesData.length > 0
+
                     ? categoriesData.map(category => (
 
                         <ListItem disablePadding>
-                            <Button className='categories__item'>{category.name}</Button>
+                            <Button
+                                className='categories__item'
+                                href={`/search?category_id=${category.id}`}
+                            >
+                                {category.name}
+                            </Button>
                         </ListItem>
 
                     ))
+
                     : Array.from({ length: 3 }).map(() => (
+
                         <Skeleton width={'100%'}>
+
                             <ListItem>
+
                                 <Button className='categories__item'>Lorem ipsum dolor sit.</Button>
+
                             </ListItem>
+
                         </Skeleton>
+
                     ))
                 }
 
-
-
-
             </List >
+
             : <List
                 component={Styles}
                 className="Categories categories"

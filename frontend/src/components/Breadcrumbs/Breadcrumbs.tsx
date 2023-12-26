@@ -1,6 +1,7 @@
 import useBreadcrumbsStyles from './Breadcrumbs.style'
-import { ReactChild, FC, useEffect } from 'react'
+import {ReactChild, FC, useEffect, useContext} from 'react'
 import { Breadcrumbs as MUIBreadcrumbs, Box, Link, Typography } from '@mui/material'
+import {GlobalContext} from "@/context";
 
 const { log } = console
 
@@ -12,6 +13,8 @@ interface BreadcrumbsProps {
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({ children }) => {
     const Styles = useBreadcrumbsStyles()
+
+    const {breadcrumbs} = useContext(GlobalContext)
 
     useEffect(() => {
         log(window.location.hash)
@@ -29,17 +32,19 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ children }) => {
             </Link>
 
 
-            <Typography
-                className='breadcrumbs__page-name'
-                color="text.secondary"
-            >
+            {breadcrumbs?.map((text, index) => (
+                <Typography
+                    key={index}
+                    className='breadcrumbs__page-name'
+                    color="text.secondary"
 
-                Новости
+                >
 
-            </Typography>
-            <Typography>
-                {/* {window.location.hash.slice(1, -1)} */}
-            </Typography>
+                    {text}
+
+                </Typography>
+            ))}
+
 
         </MUIBreadcrumbs>
     )

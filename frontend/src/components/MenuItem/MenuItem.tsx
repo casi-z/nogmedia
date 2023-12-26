@@ -22,7 +22,7 @@ const MenuItem: FC<MenuItemProps> = ({ children, startIcon, sx, href, className 
 
     const theme = useTheme()
 
-    const Styles = styled.button`
+    const Styles = styled.a`
       
         text-transform: none;
         border-radius: 0;

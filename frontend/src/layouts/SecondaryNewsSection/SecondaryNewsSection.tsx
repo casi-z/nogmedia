@@ -3,22 +3,24 @@ import { ReactChild, FC, useEffect, useState, useRef } from 'react'
 import { Box, Skeleton } from '@mui/material'
 import SecondaryNews from '@/components/SecondaryNews/SecondaryNews'
 import { INews } from "@/types/types";
-import GetNewsByID from "@/api/news/news";
+import getByNumber from "@/api/news/news";
 import { CSSTransition } from "react-transition-group";
+import NewsAPI from '@/api/news/news';
+import SecondaryNewsSkeleton from "@/components/SecondaryNews/SecondaryNewsSkeleton";
 
 const { log } = console
 
 interface SecondaryNewsSectionProps {
 
-    children?: ReactChild,
+    categoryID?: number
 
 }
 
-const news = new GetNewsByID()
+const news = new NewsAPI()
 
-let lastNewsID = 5
+let lastNewsNumber = 5
 
-const SecondaryNewsSection: FC<SecondaryNewsSectionProps> = ({ children }) => {
+const SecondaryNewsSection: FC<SecondaryNewsSectionProps> = ({ categoryID }) => {
 
     const Styles = useSecondaryNewsSectionStyles()
 
@@ -28,10 +30,20 @@ const SecondaryNewsSection: FC<SecondaryNewsSectionProps> = ({ children }) => {
 
     const secondaryNewsRef = useRef<HTMLDivElement>()
 
-    async function loadSecondaryNews(newsID: number) {
+    async function loadSecondaryNews() {
 
-        const data = await news.getNewsByID(newsID)
-        setSecondaryNewsData([data])
+        if (categoryID) {
+
+            //@ts-ignore
+            const data = await news.getByCategory(categoryID, 1)
+            setSecondaryNewsData([data])
+
+        } else {
+
+            const data = await news.getByNumber(4)
+            setSecondaryNewsData([data])
+        }
+
 
     }
 
@@ -39,13 +51,27 @@ const SecondaryNewsSection: FC<SecondaryNewsSectionProps> = ({ children }) => {
         const scrollHeight = window.scrollY + window.innerHeight
         //@ts-ignore
         if (scrollHeight > secondaryNewsRef.current.getBoundingClientRect().height - 300) {
-            const data = await news.getNewsByID(lastNewsID)
-            if (data.result) {
-                alert(true)
-                
+
+            if (categoryID) {
+
+                const data = await news.getByCategory(categoryID, lastNewsNumber)
+
+                lastNewsNumber++
+
+                log('загружаем', lastNewsNumber)
+
+                setSecondaryNewsData(prevState => [...prevState, data])
+
+            } else {
+
+                const data = await news.getByNumber(lastNewsNumber)
+
+                lastNewsNumber++
+
+                log('загружаем', lastNewsNumber)
+
+                setSecondaryNewsData(prevState => [...prevState, data])
             }
-            lastNewsID++
-            setSecondaryNewsData(prevState => [...prevState, data])
         }
     }
 
@@ -56,7 +82,10 @@ const SecondaryNewsSection: FC<SecondaryNewsSectionProps> = ({ children }) => {
     }, [isLoading])
 
     useEffect(() => {
-        loadSecondaryNews(4)
+        if(categoryID){
+            lastNewsNumber = 2
+        }
+        loadSecondaryNews()
         window.addEventListener('scroll', () => setIsLoading(true))
     }, [])
 
@@ -71,32 +100,16 @@ const SecondaryNewsSection: FC<SecondaryNewsSectionProps> = ({ children }) => {
                         { name: 'Ногинск', href: '' },
                         { name: 'Ногинск', href: '' },
                     ]}
-                    id={element.id}
-                    title={element.title}
-                    text={element.text}
-                    views={element.views}
-                    comments={23454}
-                    image={element.image}
+                    key={element.id}
+                    newsData={element}
 
                 />
 
             ))}
 
-            {/* Этот элемент - скелетон поэтому в него передаются фейковые данные */}
+            {/* Скелетон виден при загрузке новости*/}
             {!isLoadingFinished &&
-                <SecondaryNews
-                    skeleton
-                    tags={[
-
-                    ]}
-                    id={1}
-                    title={''}
-                    text={''}
-                    views={1}
-                    comments={1}
-                    image={''}
-
-                />
+                <SecondaryNewsSkeleton/>
             }
 
         </Box>

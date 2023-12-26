@@ -27,7 +27,7 @@ function useFooterStyles() {
 
       .footer__circle {
         width: 190vw;
-        height: 45vw;
+        height: 40vw;
         top: -34vw;
         left: 50%;
         transform: translateX(-50%);
@@ -54,6 +54,7 @@ function useFooterStyles() {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         background: ${theme.palette.text.primary};
         color: ${theme.palette.text.secondary};
         text-align: center;
@@ -62,6 +63,10 @@ function useFooterStyles() {
         font-style: normal;
         font-weight: 500;
         line-height: 42px; /* 262.5% */;
+        margin: 0;
+        li{
+            list-style: none;
+        }
 
         ${theme.breakpoints.down('sm')} {
           flex-direction: column;
