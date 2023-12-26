@@ -15,7 +15,6 @@ function App() {
     useEffect(() => {
         //Создаём объект для хранения истории просмотров в localStorage
         viewsHistory.init()
-        localStorage.setItem('token', '10')
 
     }, [])
 
