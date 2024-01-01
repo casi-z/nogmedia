@@ -6,7 +6,7 @@ import { Box, InputAdornment, Link, TextField, Typography, useMediaQuery, useThe
 import useHeaderStyles from './Header.style'
 import Logo from '@/components/Logo/Logo';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-
+import './snow.css'
 
 const { log } = console
 
@@ -28,6 +28,9 @@ const Header: FC<HeaderProps> = ({ children }) => {
             component={Styles}
 
         >
+
+
+
             <Box className='header__top'>
                 <Box className={'header__title'}>
                     <Logo />
@@ -41,6 +44,9 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
 
             <Box className='header__background'>
+                {Array.from({length: 200}).map((none, index) => (
+                    <div key={index} className="snow"></div>
+                ))}
                 <Box className={'header__circle'} />
             </Box>
 

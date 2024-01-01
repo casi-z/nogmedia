@@ -160,9 +160,9 @@ const ArticlePage: FC<ArticlePageProps> = ({admin}) => {
 
                         </Box>
 
-                        <Text onClick={handleEdit}>
+                        <Text>
                             {/*@ts-ignore*/}
-                            <p ref={textRef}>
+                            <p onClick={handleEdit} ref={textRef}>
                                 {articleData?.text}
                             </p>
                         </Text>

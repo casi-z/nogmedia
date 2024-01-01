@@ -65,6 +65,9 @@ function useHeaderStyles() {
           position: absolute;
           z-index: -99;
         }
+        .snow{
+          //z-index: -100;
+        }
       }
 
       /* &::before{
