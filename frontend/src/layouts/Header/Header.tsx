@@ -1,4 +1,4 @@
-import { ReactChild, FC, useState } from 'react'
+import React, { ReactChild, FC, useState, MouseEventHandler } from 'react'
 import Menu from '../../components/Menu/Menu'
 import MenuItem from '../../components/MenuItem/MenuItem'
 import LoginIcon from '@mui/icons-material/Login';
@@ -29,25 +29,29 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
         >
 
-
-
             <Box className='header__top'>
+
                 <Box className={'header__title'}>
                     <Logo />
 
                 </Box>
 
-
                 <Menu />
+
             </Box>
 
 
 
             <Box className='header__background'>
+
                 {Array.from({length: 200}).map((none, index) => (
+
                     <div key={index} className="snow"></div>
+
                 ))}
+
                 <Box className={'header__circle'} />
+
             </Box>
 
             <Breadcrumbs />
