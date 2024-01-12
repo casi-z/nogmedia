@@ -8,7 +8,7 @@ import { categoriesRoutes } from './routes/categories.js';
 import { newsRoutes } from "./routes/news.js";
 import cookieParser from "cookie-parser";
 import cors from 'cors'
-import errorMiddleware from "./meddlewares/ error.js";
+import errorMiddleware from "./middlewares/error.js";
 
 const app = express()
 
