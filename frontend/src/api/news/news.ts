@@ -1,10 +1,10 @@
-import Request from "@/api/request";
+import Api from "@/api/api";
 import HttpError from "../HTTPError";
 import viewsHistory from "@/utils/ViewsHistory";
-import { INews } from "@/types/types";
+import {IHTTPError, INews} from "@/types/types";
 import { log } from "console";
 
-export default class NewsAPI extends Request {
+export default class NewsAPI extends Api {
 
     constructor() {
         super('news');

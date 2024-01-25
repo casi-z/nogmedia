@@ -9,6 +9,7 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import SearchPage from "./pages/SearchPage/SearchPage";
+import {IUser} from "@/types/types";
 
 function App() {
 
@@ -22,8 +23,17 @@ function App() {
     const [breadcrumbs, setBreadcrumbs] = useState<string[]>([
         'Новости',
     ]);
+
+    const [userData, setUserData] = useState<IUser>({
+        id: NaN,
+        username: '',
+    });
+
+    const [isAuth, setIsAuth] = useState<boolean>(false);
+
+
     return (
-        <GlobalContext.Provider value={{breadcrumbs, setBreadcrumbs}}>
+        <GlobalContext.Provider value={{breadcrumbs, setBreadcrumbs, userData, setUserData, isAuth, setIsAuth}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Main/>}/>

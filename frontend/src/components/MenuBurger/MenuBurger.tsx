@@ -1,11 +1,13 @@
 import useMenuBurgerStyles from './MenuBurger.style'
-import { ReactChild, FC, useState } from 'react'
-import { Box, Button, Divider, Drawer, IconButton } from '@mui/material'
+import {ReactChild, FC, useState, useEffect} from 'react'
+import {Box, Button, Divider, Drawer, IconButton} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@/components/MenuItem/MenuItem';
-import { IMenuItem } from '@/types/types';
+import {IMenuItem} from '@/types/types';
+import CloseIcon from '@mui/icons-material/Close';
 import Logo from '../Logo/Logo';
-const { log } = console
+
+const {log} = console
 
 interface MenuBurgerProps {
 
@@ -14,34 +16,45 @@ interface MenuBurgerProps {
 
 }
 
-const MenuBurger: FC<MenuBurgerProps> = ({ children, menuItems }) => {
+const MenuBurger: FC<MenuBurgerProps> = ({children, menuItems}) => {
 
     const Styles = useMenuBurgerStyles()
 
 
-    const [isMenuBurgerOpen, setIsMenuBurgerOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
-    const handleClose = () => setIsMenuBurgerOpen(false)
+    const handleClose = () => {
+        setIsOpen(false)
+    }
 
-    const handleOpen = () => setIsMenuBurgerOpen(true)
+    const handleOpen = () => {
+        setIsOpen(true)
+        log(1)
+
+
+    }
+    useEffect(() => {
+        log(isOpen)
+    },[isOpen])
 
     return (<>
 
         <IconButton onClick={handleOpen}>
 
-            <MenuIcon color='primary' />
+            <MenuIcon color='primary'/>
 
         </IconButton>
 
         <Drawer
-            onClick={handleClose}
             component={Styles}
-            open={isMenuBurgerOpen}
+            open={isOpen}
             anchor={'right'}
+            onClose={() => setIsOpen(false) }
+
 
         >
 
-            <Box className='menu-burger__items'>
+            <Box role="presentation" className='menu-burger__items'>
 
                 {menuItems.map((menuItem, index) => (
 
@@ -49,24 +62,19 @@ const MenuBurger: FC<MenuBurgerProps> = ({ children, menuItems }) => {
                         key={index}
                         href={menuItem.href}
                         onClick={handleClose}
-                        onKeyDown={handleClose}
                     >
                         {menuItem.name}
                     </MenuItem>
 
                 ))}
 
-                <Divider />
+                <Divider/>
 
             </Box>
 
-            <Button
-                href="https://google.com"
-                onClick={handleClose}
-                onKeyDown={handleClose}
-            >
-                <Logo />
-            </Button>
+
+            <Logo/>
+
 
         </Drawer>
 

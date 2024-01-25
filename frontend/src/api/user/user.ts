@@ -1,10 +1,11 @@
-import Request from "@/api/request";
+import Api from "@/api/api";
 import HttpError from "@/api/HTTPError";
+import {$api} from "@/api/constants";
 
-export default class User extends Request {
+export default class User extends Api {
 
     constructor() {
-        super('user');
+        super('user', $api);
     }
 
     //Отправляет код в контакте
@@ -16,12 +17,12 @@ export default class User extends Request {
             return response.data
 
         } catch (error) {
-            return new HttpError(error)
+            return error
         }
 
     }
 
-    public async login(username: string, code: number){
+    public async login(username: string, code: string | undefined){
 
         try {
 
@@ -29,9 +30,14 @@ export default class User extends Request {
             return response.data
 
         } catch (error) {
-            console.log(error)
+
+            return error
         }
 
+    }
+
+    public async logout(){
+        await super.post({}, 'logout')
     }
 
 }

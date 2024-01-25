@@ -1,12 +1,13 @@
-import React, { ReactChild, FC, useState, MouseEventHandler } from 'react'
+import React, {ReactChild, FC, useState, MouseEventHandler, useContext} from 'react'
 import Menu from '../../components/Menu/Menu'
 import MenuItem from '../../components/MenuItem/MenuItem'
 import LoginIcon from '@mui/icons-material/Login';
-import { Box, InputAdornment, Link, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {Avatar, Box, InputAdornment, Link, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
 import useHeaderStyles from './Header.style'
 import Logo from '@/components/Logo/Logo';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import './snow.css'
+import {GlobalContext} from "@/context";
 
 const { log } = console
 
@@ -17,6 +18,8 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ children }) => {
+
+    const context = useContext(GlobalContext)
 
     const Styles = useHeaderStyles()
 
@@ -36,7 +39,13 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
                 </Box>
 
-                <Menu />
+                <div className="header__menu-container">
+                    <Menu />
+                    {context.isAuth ? <><Avatar>{context.userData.username[0]}</Avatar> {context.userData.username}</> : <></>}
+                </div>
+
+
+
 
             </Box>
 
@@ -44,11 +53,11 @@ const Header: FC<HeaderProps> = ({ children }) => {
 
             <Box className='header__background'>
 
-                {Array.from({length: 200}).map((none, index) => (
+                {/*{Array.from({length: 200}).map((none, index) => (*/}
 
-                    <div key={index} className="snow"></div>
+                {/*    <div key={index} className="snow"></div>*/}
 
-                ))}
+                {/*))}*/}
 
                 <Box className={'header__circle'} />
 

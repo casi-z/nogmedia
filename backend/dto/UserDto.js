@@ -5,6 +5,6 @@ export default class UserDto {
     constructor(model) {
         const user = model[0][0]
         this.id = user.id
-        this.vkId = user.vkId
+        this.username = user.name
     }
 }

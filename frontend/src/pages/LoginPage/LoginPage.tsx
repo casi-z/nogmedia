@@ -1,11 +1,13 @@
 import useLoginPageStyles from './LoginPage.style'
-import {ReactChild, FC, useState, useRef} from 'react'
+import {ReactChild, FC, useState, useRef, useEffect, useContext} from 'react'
 import {Alert, Box, Button, Collapse, IconButton, TextField} from '@mui/material'
 import Page from "@/components/Page/Page";
 import SendIcon from '@mui/icons-material/Send';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
 import User from "@/api/user/user";
+import {GlobalContext} from "@/context";
+import {redirect} from "react-router-dom";
 
 const {log} = console
 
@@ -20,36 +22,72 @@ const user = new User()
 
 const LoginPage: FC<LoginPageProps> = ({children}) => {
 
+    const context = useContext(GlobalContext)
+
     const Styles = useLoginPageStyles()
 
 
-    const [userAction, setLoginAction] = useState('sendCode');
+    const [inputAction, setInputAction] = useState('sendCode');
     const [alertMessage, setAlertMessage] = useState<string>('');
     const [username, setUsername] = useState<string>('')
+    const [isResendButtonEnable, setIsResendButtonEnable] = useState<boolean>(false)
+    const [resendButtonTimeOut, setResendButtonTimeOut] = useState<string>('')
+
     const inputRef = useRef<HTMLInputElement>(null)
 
-    function handleChange(event: any) {
-        //setUsername(event.target.value)
 
+    function countDownTimer(minutes: number, seconds: number) {
+        let valMin = minutes
+        let valSec = seconds
+        setInterval(() => {
+            if (valSec === 0 && valMin === 0) return 'end'
+            if (valSec === 0) valMin--
+            valSec = 60
+            valSec--
+            setResendButtonTimeOut(() => `${valMin}:${valSec}`)
+        }, 1000)
     }
 
-    async function handleClick(event: any) {
-        event.preventDefault()
-        const value = inputRef.current?.querySelector('input')?.value
-        setUsername(String(value))
-        if (userAction === 'sendCode') {
+    useEffect(() => {
 
+        setTimeout(() => setIsResendButtonEnable(true), 15 * 1000)
+        countDownTimer(15, 0)
+
+    }, [])
+
+    async function handleClick(event: any) {
+
+        event.preventDefault()
+
+        const value = inputRef.current?.querySelector('input')?.value
+
+
+
+        if (inputAction === 'sendCode') {
+
+            setUsername(String(value))
             const result = await user.sendCode(String(value))
 
-            if (result.type) {
+            if (result.error) {
                 setAlertMessage(result.message)
             } else {
-                setLoginAction('user')
+                setInputAction('login')
+            }
+            log(result)
+        } else {
+
+            const result = await user.login(username, value)
+            log(result)
+
+            if(result.user){
+                context.setIsAuth(true)
+                context.setUserData(result.user)
+            }else{
+                return setAlertMessage('Неверный код')
             }
 
-        } else {
-            await user.login(username, Number(value))
-            setLoginAction('sendCode')
+            setInputAction('sendCode')
+            alert('ты вошёл')
         }
 
 
@@ -66,7 +104,7 @@ const LoginPage: FC<LoginPageProps> = ({children}) => {
                     noValidate
                     autoComplete="off"
                 >
-                    <Collapse in={alertMessage !== ''}>
+                    <Collapse in={true}>
                         <Alert
                             severity="error"
                             action={
@@ -88,27 +126,33 @@ const LoginPage: FC<LoginPageProps> = ({children}) => {
                     </Collapse>
 
                     <TextField
+
                         label={
-                            userAction === 'sendCode'
+                            inputAction === 'sendCode'
                                 ? "VK ID"
                                 : 'Код из сообщения'
                         }
                         ref={inputRef}
                     />
+
                     <Button
                         variant={'contained'}
                         onClick={handleClick}
                         endIcon={
-                            userAction === 'sendCode'
+                            inputAction === 'sendCode'
                                 ? <SendIcon/>
                                 : <ArrowForwardIosIcon/>
                         }
 
                     >{
-                        userAction === 'sendCode'
+                        inputAction === 'sendCode'
                             ? 'Отправить код'
                             : 'Войти'
                     }</Button>
+
+                    <Button disabled={!isResendButtonEnable} variant={'text'}>
+                        отправить код ещё раз {resendButtonTimeOut}
+                    </Button>
 
                 </Box>
 

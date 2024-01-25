@@ -1,6 +1,6 @@
-import Request from "../request"
+import Api from "../api"
 
-class CategoriesAPI extends Request {
+class CategoriesAPI extends Api {
     
     constructor(){
         super('categories')

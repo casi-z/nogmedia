@@ -14,7 +14,6 @@ function useSecondaryNewsStyles() {
         styled.a`
   
           width: calc(50% - 0.5vw);
-          /* height: 40vh; */
           background: #fff;
           display: flex;
           flex-direction: column;
@@ -26,6 +25,12 @@ function useSecondaryNewsStyles() {
           padding: 0;
           text-transform: none;
           height:50vh;
+
+          ${theme.breakpoints.down('sm')}{
+
+            height: auto;
+
+          }
           
           img {
             width: 100%;
