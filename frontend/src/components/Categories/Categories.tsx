@@ -51,7 +51,7 @@ const Categories: FC<CategoriesProps> = ({ children }) => {
                 component={Styles}
                 className="Categories categories"
                 subheader={
-                    <SecondaryHeader>Category</SecondaryHeader>
+                    <SecondaryHeader>Категории</SecondaryHeader>
                 }
             >
 

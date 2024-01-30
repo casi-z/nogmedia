@@ -35,7 +35,7 @@ const Tags: FC<TagsProps> = ({ children }) => {
     return (
         <Box component={Styles} className="Tags tags">
 
-            <SecondaryHeader>Tags</SecondaryHeader>
+            <SecondaryHeader>#Тэги</SecondaryHeader>
 
             <Box className='tags__content'>
 

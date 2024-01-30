@@ -7,6 +7,7 @@ import {ReactComponent as ViewsIcon} from '@/svg/views.svg'
 import {ReactComponent as CommentsIcon} from '@/svg/comments.svg'
 import {INews} from '@/types/types'
 import NewsBackground from '@/img/news-background.png'
+import textUtil from "@/utils/textUtil";
 
 const {log} = console
 
@@ -32,9 +33,9 @@ const PrimaryNews: FC<PrimaryNewsProps> =
             >
 
                 <Box className='primary-news__content'>
-                    <PrimaryHeader>{title}</PrimaryHeader>
+                    <PrimaryHeader>{textUtil.max(title, 60)}</PrimaryHeader>
 
-                    <Text>{text?.slice(0, 110)}...</Text>
+                    <Text>{textUtil.max(text, 110)}</Text>
 
                     <Box className='primary-news__data'>
                         <span><ViewsIcon/>{views}</span>

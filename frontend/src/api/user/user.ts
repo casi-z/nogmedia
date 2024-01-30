@@ -27,6 +27,7 @@ export default class User extends Api {
         try {
 
             const response: any = await super.post({'username': username, 'code': code}, 'login')
+            localStorage.setItem('token', response.data.accessToken)
             return response.data
 
         } catch (error) {

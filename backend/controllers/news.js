@@ -5,7 +5,7 @@ class NewsController {
 
     async getByNumber(request, response) {
 
-        database.query(`SELECT * FROM news LIMIT 1 OFFSET ?`,
+        database.query(`SELECT * FROM news ORDER BY ID DESC LIMIT 1 OFFSET ?`,
 
             [request.body.newsNumber - 1],
 
@@ -42,7 +42,7 @@ class NewsController {
 
     async getByCategory(request, response) {
 
-        database.query(`SELECT * FROM news WHERE category = ? LIMIT 1 OFFSET ?`,
+        database.query(`SELECT * FROM news WHERE category = ? ORDER BY ID DESC LIMIT 1 OFFSET ? `,
 
             [request.body.categoryID, request.body.newsNumber - 1],
 

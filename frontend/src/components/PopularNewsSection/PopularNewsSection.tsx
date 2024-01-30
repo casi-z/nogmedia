@@ -39,7 +39,7 @@ const PopularNewsSection: FC<PopularNewsSectionProps> = ({ children }) => {
         <Box component={Styles} className="PopularNews popular-news">
 
             <SecondaryHeader>
-                Popular news
+                Популярные ⚡️
             </SecondaryHeader>
 
             {popularNews.map(news => (

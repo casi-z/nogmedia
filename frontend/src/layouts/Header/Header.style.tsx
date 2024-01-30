@@ -43,6 +43,20 @@ function useHeaderStyles() {
             
         }
       
+      .header__menu-container{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .header__user-data{
+        display: flex;
+        white-space: nowrap;
+        justify-content: center;
+        align-items: center;
+        text-transform: none;
+      }
+      
       .header__background{
         position: absolute;
         top: 0;
@@ -51,7 +65,6 @@ function useHeaderStyles() {
         height: 50vh;
         background: ${theme.palette.secondary.light};
         z-index: -1;
-
         
 
         .header__circle{

@@ -8,6 +8,7 @@ import NewsAPI from "@/api/news/news";
 import {INews} from "@/types/types";
 import axios from "axios";
 import PrimaryNewsSkeleton from "@/components/PrimaryNews/PrimaryNewsSkeleton";
+import textUtil from "@/utils/textUtil";
 
 const {log} = console
 
@@ -87,7 +88,7 @@ const PrimaryNewsSection: FC<PrimaryNewsSectionProps> = ({children}) => {
                                     <PrimaryNews
                                         key={primaryNewsDataItem.id}
                                         id={primaryNewsDataItem.id}
-                                        title={primaryNewsDataItem.title}
+                                        title={textUtil.max(primaryNewsDataItem.title, 23)}
                                         text={primaryNewsDataItem.text}
                                         views={primaryNewsDataItem.views}
                                         comments={primaryNewsDataItem.comments}

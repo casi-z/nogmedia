@@ -20,6 +20,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import SaveIcon from '@mui/icons-material/Save';
 import {UploadFile} from "@mui/icons-material";
 import URLutil from "@/utils/URLutil";
+import textUtil from "@/utils/textUtil";
 
 const {log} = console
 
@@ -115,19 +116,13 @@ const ArticlePage: FC<ArticlePageProps> = ({admin}) => {
 
     useEffect(() => {
 
-        // if (Number(window.location.search.slice(1))) {
-        //     const articleID = Number(
-        //         window.location.search.slice(1)
-        //     )
-        //
-        //     loadArticleData(articleID)
-        // } else {
-        //
-        // }
 
         const articleId = URLutil.search('id')
+
         if(articleId){
+
             loadArticleData(Number(articleId))
+
         } else{
             window.location.href = '/error?code=404'
         }
@@ -162,9 +157,12 @@ const ArticlePage: FC<ArticlePageProps> = ({admin}) => {
 
                         <Text>
                             {/*@ts-ignore*/}
-                            <p onClick={handleEdit} ref={textRef}>
-                                {articleData?.text}
-                            </p>
+                            {articleData?.text
+                                ? <p dangerouslySetInnerHTML={{__html: textUtil.createArticle(articleData?.text)}} onClick={handleEdit}>
+
+                                </p>
+                                :<></>
+                            }
                         </Text>
 
                         <PrimaryHeader>
